@@ -1,0 +1,580 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- Head tag -->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="google-site-verification" content="xBT4GhYoi5qRD5tr338pgPM5OWHHIDR6mNg1a3euekI" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="keyword"  content="">
+    <link rel="shortcut icon" href="/img/ironman-draw.png">
+    <!-- Place this tag in your head or just before your close body tag. -->
+    <script async defer src="https://buttons.github.io/buttons.js"></script>
+    <title>
+        
+          [WebSocket]服务器长连接（一） - Jerry_Z | Blog
+        
+    </title>
+
+    <link rel="canonical" href="http://www.huweihuang.com/article/Websocket-服务器长连接（一）/">
+
+    <!-- Bootstrap Core CSS -->
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+
+    <!-- Custom CSS --> 
+    <link rel="stylesheet" href="/css/beantech.min.css">
+    
+    <!-- Pygments Highlight CSS -->
+    <link rel="stylesheet" href="/css/highlight.css">
+
+    <link rel="stylesheet" href="/css/widget.css">
+
+    <link rel="stylesheet" href="/css/rocket.css">
+
+    <link rel="stylesheet" href="/css/signature.css">
+
+    <link rel="stylesheet" href="/css/toc.css">
+
+    <!-- Custom Fonts -->
+    <!-- <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css"> -->
+    <!-- Hux change font-awesome CDN to qiniu -->
+    <link href="https://cdn.staticfile.org/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+
+    <!-- Hux Delete, sad but pending in China
+    <link href='http://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/
+    css'>
+    -->
+
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <!-- ga & ba script hoook -->
+    <script></script>
+</head>
+
+
+<!-- hack iOS CSS :active style -->
+<body ontouchstart="">
+	<!-- Modified by Yu-Hsuan Yen -->
+<!-- Post Header -->
+<style type="text/css">
+    header.intro-header{
+        
+            background-image: url('/img/article_header/article_bg.jpg')
+            /*post*/
+        
+    }
+    
+    #signature{
+        background-image: url('/img/signature/BeanTechSign-white.png');
+    }
+    
+</style>
+
+<header class="intro-header" >
+    <!-- Signature -->
+    <div id="signature">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                
+                    <div class="post-heading">
+                        <div class="tags">
+                            
+                              <a class="tag" href="/tags/#WebSocket" title="WebSocket">WebSocket</a>
+                            
+                        </div>
+                        <h1>[WebSocket]服务器长连接（一）</h1>
+                        <h2 class="subheading"></h2>
+                        <span class="meta">
+                            Posted by Jerry_Z on
+                            2019-01-05
+                        </span>
+                    </div>
+                
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+	
+    <!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">Jerry_Z</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <!-- Known Issue, found by Hux:
+            <nav>'s height woule be hold on by its content.
+            so, when navbar scale out, the <nav> will cover tags.
+            also mask any touch event of tags, unfortunately.
+        -->
+        <div id="huxblog_navbar">
+            <div class="navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="/">Home</a>
+                    </li>
+
+                    
+
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/about/">About</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/archive/">Archives</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/tags/">Tags</a>
+                        </li>
+                        
+                    
+                    
+                </ul>
+            </div>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container -->
+</nav>
+<script>
+    // Drop Bootstarp low-performance Navbar
+    // Use customize navbar with high-quality material design animation
+    // in high-perf jank-free CSS3 implementation
+    var $body   = document.body;
+    var $toggle = document.querySelector('.navbar-toggle');
+    var $navbar = document.querySelector('#huxblog_navbar');
+    var $collapse = document.querySelector('.navbar-collapse');
+
+    $toggle.addEventListener('click', handleMagic)
+    function handleMagic(e){
+        if ($navbar.className.indexOf('in') > 0) {
+        // CLOSE
+            $navbar.className = " ";
+            // wait until animation end.
+            setTimeout(function(){
+                // prevent frequently toggle
+                if($navbar.className.indexOf('in') < 0) {
+                    $collapse.style.height = "0px"
+                }
+            },400)
+        }else{
+        // OPEN
+            $collapse.style.height = "auto"
+            $navbar.className += " in";
+        }
+    }
+</script>
+
+
+    <!-- Main Content -->
+    <!-- Modify by Yu-Hsuan Yen -->
+
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+
+            <!-- Post Container -->
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                post-container">
+
+                <h4 id="1为什么需要websocket">1.为什么需要WebSocket?</h4>
+<p>因为HTTP协议有一个缺陷：通信只能由客户端发起。HTTP协议做不到服务器主动向客户端推送信息。</p>
+<h4 id="2之前的技术">2.之前的技术</h4>
+<h5 id="21-轮询polling">2.1 轮询(polling)</h5>
+<blockquote>
+<p>轮询是指JavaScript启动一个定时器，然后以固定的间隔给服务器发请求，询问服务器是否有新的数据改动。<br>
+最典型的场景就是聊天室。</p>
+</blockquote>
+<p><strong>缺点</strong>：这种方法会导致过多不必要的请求，浪费流量和服务器资源。</p>
+<h5 id="22-commet">2.2 Commet</h5>
+<blockquote>
+<p>又可以分为长轮询和流技术。</p>
+</blockquote>
+<p><code>长轮询</code>改进了上述的轮询技术，减小了无用的请求。它会为某些数据设定过期时间，当数据过期后才会向服务端发送请求；这种机制适合数据的改动不是特别频繁的情况。</p>
+<p><code>流技术</code>通常是指客户端使用一个隐藏的窗口与服务端建立一个HTTP长连接，服务端会不断更新连接状态以保持HTTP长连接存活；这样的话，服务端就可以通过这条长连接主动将数据发送给客户端；流技术在大并发环境下，可能会考验到服务端的性能。</p>
+<p><strong>缺点</strong>：以多线程模式运行的服务器会让线程大部分时间处于挂起状态，<code>极大地浪费服务器资源</code>。另外，<code>网关的不可控性</code>，一个HTTP连接在长时间没有数据传输的情况下，链路上的任何一个网关都可能关闭这个连接，这就要求commet连接必须定期发一些ping数据表示连接“正常工作”。</p>
+<h5 id="23-总结">2.3 总结</h5>
+<p>这两种技术都是基于请求-应答模式，都不算是真正意义上的实时技术；它们的每一次请求、应答，都浪费了一定流量在相同的头部信息上，并且开发复杂度也较大。</p>
+<h4 id="3websocket简介">3.WebSocket简介</h4>
+<p>它是一种协议，诞生在2008年，2011年成为国际标准，所有的浏览器都支持。它是HTML5推出的协议标准。让服务器和浏览器之间可以建立无限制的<code>全双工通信</code>。</p>
+<blockquote>
+<p>WebSocket的工作流程是这样的：浏览器通过JavaScript向服务端发出建立WebSocket连接的请求，在WebSocket连接建立成功后，客户端和服务端就可以通过 TCP连接传输数据。因为WebSocket连接本质上是TCP连接，不需要每次传输都带上重复的头部数据，所以它的数据传输量比轮询和Comet技术小 了很多。</p>
+</blockquote>
+<p><strong>最大特点</strong>：服务器可以主动向客户端推送信息，客户端也可以主动向服务器发送信息，是真正的双向平等对话，属于<code>服务器推送技术</code>的一种。<br>
+<img src="https://upload-images.jianshu.io/upload_images/7888316-a7ed4bf431fffcf8.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="img"></p>
+<p>WebSocket连接必须由浏览器发起，因为请求是一个标准的HTTP请求：</p>
+<figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">GET</span> <span class="attr">ws://localhost:3000/ws/chat</span> <span class="string">HTTP/1.1</span></span><br><span class="line"><span class="attr">Host:</span> <span class="string">localhost</span></span><br><span class="line"><span class="attr">Upgrade:</span> <span class="string">websocket</span></span><br><span class="line"><span class="attr">Connection:</span> <span class="string">Upgrade</span></span><br><span class="line"><span class="attr">Origin:</span> <span class="attr">http://localhost:3000</span></span><br><span class="line"><span class="attr">Sec-WebSocket-Key:</span> <span class="string">client-random-string</span></span><br><span class="line"><span class="attr">Sec-WebSocket-Version:</span> <span class="number">13</span></span><br></pre></td></tr></table></figure>
+<p>该请求和普通的http请求有几点不同：<br>
+1.GET请求的地址不是类似<code>/path/</code>，而是以<code>ws://</code>开头的地址；<br>
+2.请求头<code>Upgrade: websocket</code>和<code>Connection: Upgrade</code>表示这个连接将要被转换为WebSocket连接；<br>
+3.<code>Sec-WebSocket-Key</code>是用于标识这个连接，并非用于加密数据；<br>
+4.<code>Sec-WebSocket-Version</code>指定了WebSocket的协议版本。</p>
+<p>响应头：</p>
+<figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">HTTP/1.1</span> <span class="number">101</span> <span class="string">Switching</span> <span class="string">Protocols</span></span><br><span class="line"><span class="attr">Upgrade:</span> <span class="string">websocket</span></span><br><span class="line"><span class="attr">Connection:</span> <span class="string">Upgrade</span></span><br><span class="line"><span class="attr">Sec-WebSocket-Accept:</span> <span class="string">server-random-string</span></span><br></pre></td></tr></table></figure>
+<h6 id="31为什么websocket可以实现全双工通信而http协议不行">3.1为什么Websocket可以实现全双工通信而HTTP协议不行？</h6>
+<p>实际上HTTP协议是建立在TCP协议之上的，TCP协议本身就实现了全双工通信，但是HTTP的<code>请求-应答</code>机制限制了全双工通信。</p>
+<p>websocket连接建立以后，其实只是简单规定了一下：接下来，咱们的通信就不使用HTTP协议了，直接互发数据吧。</p>
+<h6 id="32服务器支持">3.2服务器支持</h6>
+<p>由于WebSocket是一个协议，服务器具体怎么实现，取决于所用的编程语言和框架本身。</p>
+<p>Node.js本身支持的协议有TCP协议和HTTP协议。要支持WebSocket协议，需要对Bode.js提高的HTTPServer做额外的开发。</p>
+<p>已经有若干基于Node.js的稳定可靠的WebSocket实现，我们直接用npm安装使用即可。</p>
+<h6 id="33ws模块">3.3ws模块</h6>
+<blockquote>
+<p>在Node.js中，使用最广泛的WebSocket模块是<code>ws</code>。</p>
+</blockquote>
+<p>创建一个WebSocket的服务器实例很容易：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> WebSocket = <span class="built_in">require</span>(<span class="string">'ws'</span>); <span class="comment">//导入WebSocket模块</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> wss = <span class="keyword">new</span> WebSocket.Server(&#123; <span class="attr">port</span>: <span class="number">8080</span> &#125;); <span class="comment">//引用Server类，并实例化</span></span><br></pre></td></tr></table></figure>
+<p>这样我们就在8080端口打开了一个webSocket Server。该实例由变量<code>wss</code>引用。</p>
+<p>接下来如果有WebSocket请求接入，<code>wss</code>对象可以相应<code>connection</code>事件来处理这个<code>WebServer</code>。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">wss.on(<span class="string">'connection'</span>, <span class="function"><span class="keyword">function</span> <span class="title">connection</span>(<span class="params">ws</span>) </span>&#123; <span class="comment">//connection事件</span></span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'server: receive connection.'</span>);</span><br><span class="line">    </span><br><span class="line">    ws.on(<span class="string">'message'</span>, <span class="function"><span class="keyword">function</span> <span class="title">incoming</span>(<span class="params">message</span>) </span>&#123;  </span><br><span class="line">        <span class="built_in">console</span>.log(<span class="string">'server: received: %s'</span>, message);</span><br><span class="line">    &#125;);</span><br><span class="line"></span><br><span class="line">    ws.send(<span class="string">'world'</span>);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p><strong>客户端创建WebSocket连接</strong></p>
+<p>客户端的写法：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//打开一个webSocket连接</span></span><br><span class="line"> <span class="keyword">var</span> ws = <span class="keyword">new</span> WebSocket(<span class="string">'ws://localhost:8080'</span>);</span><br><span class="line"> <span class="comment">//打开websocket连接后立刻发送一条消息</span></span><br><span class="line"> ws.onopen = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">   <span class="built_in">console</span>.log(<span class="string">'ws onopen'</span>);</span><br><span class="line">   ws.send(<span class="string">'from client: hello'</span>);</span><br><span class="line"> &#125;;</span><br><span class="line"> <span class="comment">//响应收到的消息</span></span><br><span class="line"> ws.onmessage = <span class="function"><span class="keyword">function</span> (<span class="params">e</span>) </span>&#123;</span><br><span class="line">   <span class="built_in">console</span>.log(<span class="string">'ws onmessage'</span>);</span><br><span class="line">   <span class="built_in">console</span>.log(<span class="string">'from server: '</span> + e.data);</span><br><span class="line"> &#125;;</span><br><span class="line"> <span class="comment">//关闭连接</span></span><br><span class="line"> ws.onclose = <span class="function"><span class="keyword">function</span> (<span class="params">evt</span>) </span>&#123;</span><br><span class="line">   <span class="built_in">console</span>.log(<span class="string">"connection closed"</span>)</span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure>
+<p>在Node环境下，<code>ws</code>模块的客户端可以用于测试服务器端的代码，否则每次都必须在浏览器中执行JavaScript代码。</p>
+<p><strong>同源策略</strong><br>
+WebSocket协议本身不支持同源策略，也就是某个地址为<code>http://a.com</code>的网页可以通过websocket连接到<code>ws://b.com</code>。但是，浏览器会发送<code>Origin</code>的HTTP头给服务器，服务器可以根据<code>Origin</code>拒绝这个WebSocket请求。所以，是否要求同源要看服务器端如何检查。<br>
+<img src="https://upload-images.jianshu.io/upload_images/7888316-9457cdd15a361c1f.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="img"></p>
+<h4 id="4websocket-api">4.WebSocket API</h4>
+<h6 id="41事件">4.1事件</h6>
+<p>支持的事件有<code>open</code>、<code>message</code>、<code>close</code>和<code>error</code>。注意<code>message</code>事件在接受到所有数据时出发。</p>
+<p>支持的原生的两个写法：</p>
+<ul>
+<li>onEvent=handler</li>
+<li>addEventListener(event,handler)</li>
+</ul>
+
+                
+
+                <hr>
+                <!-- Pager -->
+                <ul class="pager">
+                    
+                    
+                        <li class="next">
+                            <a href="/article/hexo-theme-huweihuang/" data-toggle="tooltip" data-placement="top" title="[Hexo] Theme HuWeihuang">Next Post &rarr;</a>
+                        </li>
+                    
+                </ul>
+
+                <br>
+                
+                <!-- require APlayer -->
+                
+
+                <!-- duoshuo Share start -->
+                
+                <!-- 多说 Share end-->
+
+                <!-- 多说评论框 start -->
+                
+                <!-- 多说评论框 end -->
+
+                <!-- disqus comment start -->
+                
+                <!-- disqus comment end -->
+
+                
+
+            </div>
+            
+            <!-- Tabe of Content -->
+            <!-- Table of Contents -->
+
+  
+    <style>
+      span.toc-nav-number{
+        display: none
+      }
+    </style>
+  
+    
+      <aside id="sidebar">
+        <div id="toc" class="toc-article">
+        <strong class="toc-title">Contents</strong>
+        
+          <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#1为什么需要websocket"><span class="toc-nav-number">1.</span> <span class="toc-nav-text">1.&#x4E3A;&#x4EC0;&#x4E48;&#x9700;&#x8981;WebSocket?</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#2之前的技术"><span class="toc-nav-number">2.</span> <span class="toc-nav-text">2.&#x4E4B;&#x524D;&#x7684;&#x6280;&#x672F;</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#21-轮询polling"><span class="toc-nav-number">2.1.</span> <span class="toc-nav-text">2.1 &#x8F6E;&#x8BE2;(polling)</span></a></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#22-commet"><span class="toc-nav-number">2.2.</span> <span class="toc-nav-text">2.2 Commet</span></a></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#23-总结"><span class="toc-nav-number">2.3.</span> <span class="toc-nav-text">2.3 &#x603B;&#x7ED3;</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#3websocket简介"><span class="toc-nav-number">3.</span> <span class="toc-nav-text">3.WebSocket&#x7B80;&#x4ECB;</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-6"><a class="toc-nav-link" href="#31为什么websocket可以实现全双工通信而http协议不行"><span class="toc-nav-number">3.0.1.</span> <span class="toc-nav-text">3.1&#x4E3A;&#x4EC0;&#x4E48;Websocket&#x53EF;&#x4EE5;&#x5B9E;&#x73B0;&#x5168;&#x53CC;&#x5DE5;&#x901A;&#x4FE1;&#x800C;HTTP&#x534F;&#x8BAE;&#x4E0D;&#x884C;&#xFF1F;</span></a></li><li class="toc-nav-item toc-nav-level-6"><a class="toc-nav-link" href="#32服务器支持"><span class="toc-nav-number">3.0.2.</span> <span class="toc-nav-text">3.2&#x670D;&#x52A1;&#x5668;&#x652F;&#x6301;</span></a></li><li class="toc-nav-item toc-nav-level-6"><a class="toc-nav-link" href="#33ws模块"><span class="toc-nav-number">3.0.3.</span> <span class="toc-nav-text">3.3ws&#x6A21;&#x5757;</span></a></li></ol></li></ol></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#4websocket-api"><span class="toc-nav-number">4.</span> <span class="toc-nav-text">4.WebSocket API</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-6"><a class="toc-nav-link" href="#41事件"><span class="toc-nav-number">4.0.1.</span> <span class="toc-nav-text">4.1&#x4E8B;&#x4EF6;</span></a></li></ol></li></ol></li></ol>
+        
+        </div>
+      </aside>
+    
+
+                
+            <!-- Sidebar Container -->
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                sidebar-container">
+
+                <!-- Featured Tags -->
+                
+                <section>
+                    <!-- no hr -->
+                    <h5><a href="/tags/">FEATURED TAGS</a></h5>
+                    <div class="tags">
+                       
+                          <a class="tag" href="/tags/#WebSocket" title="WebSocket">WebSocket</a>
+                        
+                    </div>
+                </section>
+                
+
+                <!-- Friends Blog -->
+                
+                <hr>
+                <h5>FRIENDS</h5>
+                <ul class="list-inline">
+
+                    
+                        <li><a href="http://michaeljian.top/" target="_blank">Michaeljian</a></li>
+                    
+                </ul>
+                
+            </div>
+        </div>
+    </div>
+</article>
+
+
+
+
+
+
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+<!-- anchor-js, Doc:http://bryanbraun.github.io/anchorjs/ -->
+<script>
+    async("https://cdn.bootcss.com/anchor-js/1.1.1/anchor.min.js",function(){
+        anchors.options = {
+          visible: 'hover',
+          placement: 'left',
+          icon: 'ℬ'
+        };
+        anchors.add().remove('.intro-header h1').remove('.subheading').remove('.sidebar-container h5');
+    })
+</script>
+<style>
+    /* place left on bigger screen */
+    @media all and (min-width: 800px) {
+        .anchorjs-link{
+            position: absolute;
+            left: -0.75em;
+            font-size: 1.1em;
+            margin-top : -0.1em;
+        }
+    }
+</style>
+
+
+
+    <!-- Footer -->
+    <!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <ul class="list-inline text-center">
+                
+                
+                
+
+                
+
+                
+
+                
+                    <li>
+                        <a target="_blank"  href="https://github.com/zhujinrui">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+
+                </ul>
+                <p class="copyright text-muted">
+                    Copyright &copy; Jerry_Z 2019 
+                    <br>
+                    Theme by <a href="http://beantech.org">BeanTech</a> 
+                    <span style="display: inline-block; margin: 0 5px;">
+                        <i class="fa fa-heart"></i>
+                    </span> 
+                    re-Ported by <a href="http://www.huweihuang.com">胡伟煌</a> | 
+                    <iframe
+                        style="margin-left: 2px; margin-bottom:-5px;"
+                        frameborder="0" scrolling="0" width="91px" height="20px"
+                        src="https://ghbtns.com/github-btn.html?user=huweihuang&repo=hexo-theme-huweihuang&type=star&count=true" >
+                    </iframe>
+                </p>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- jQuery -->
+<script src="/js/jquery.min.js"></script>
+
+<!-- Bootstrap Core JavaScript -->
+<script src="/js/bootstrap.min.js"></script>
+
+<!-- Custom Theme JavaScript -->
+<script src="/js/hux-blog.min.js"></script>
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+
+<!-- 
+     Because of the native support for backtick-style fenced code blocks 
+     right within the Markdown is landed in Github Pages, 
+     From V1.6, There is no need for Highlight.js, 
+     so Huxblog drops it officially.
+
+     - https://github.com/blog/2100-github-pages-now-faster-and-simpler-with-jekyll-3-0  
+     - https://help.github.com/articles/creating-and-highlighting-code-blocks/    
+-->
+<!--
+    <script>
+        async("http://cdn.bootcss.com/highlight.js/8.6/highlight.min.js", function(){
+            hljs.initHighlightingOnLoad();
+        })
+    </script>
+    <link href="http://cdn.bootcss.com/highlight.js/8.6/styles/github.min.css" rel="stylesheet">
+-->
+
+
+<!-- jquery.tagcloud.js -->
+<script>
+    // only load tagcloud.js in tag.html
+    if($('#tag_cloud').length !== 0){
+        async("http://www.huweihuang.com/js/jquery.tagcloud.js",function(){
+            $.fn.tagcloud.defaults = {
+                //size: {start: 1, end: 1, unit: 'em'},
+                color: {start: '#bbbbee', end: '#0085a1'},
+            };
+            $('#tag_cloud a').tagcloud();
+        })
+    }
+</script>
+
+<!--fastClick.js -->
+<script>
+    async("https://cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function(){
+        var $nav = document.querySelector("nav");
+        if($nav) FastClick.attach($nav);
+    })
+</script>
+
+
+<!-- Google Analytics -->
+
+
+<script>
+    // dynamic User by Hux
+    var _gaId = 'UA-XXXXXXXX-X';
+    var _gaDomain = 'yoursite';
+
+    // Originial
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+    ga('create', _gaId, _gaDomain);
+    ga('send', 'pageview');
+</script>
+
+
+
+
+<!-- Baidu Tongji -->
+
+<script>
+    // dynamic User by Hux
+    var _baId = 'r45fhy7653897235wg5ye709d930f62e';
+
+    // Originial
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?" + _baId;
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+</script>
+
+
+
+
+
+
+	<a id="rocket" href="#top" class=""></a>
+	<script type="text/javascript" src="/js/totop.js?v=1.0.0" async=""></script>
+    <script type="text/javascript" src="/js/toc.js?v=1.0.0" async=""></script>
+<!-- Image to hack wechat -->
+<img src="http://www.huweihuang.com/img/icon_wechat.png" width="0" height="0" />
+<!-- Migrate from head to bottom, no longer block render and still work -->
+
+</body>
+
+</html>
