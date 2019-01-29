@@ -18,7 +18,7 @@
         
     </title>
 
-    <link rel="canonical" href="http://www.huweihuang.com/">
+    <link rel="canonical" href="http://www.huweihuang.com/tags/宏任务与微任务/">
 
     <!-- Bootstrap Core CSS -->
     <link rel="stylesheet" href="/css/bootstrap.min.css">
@@ -69,8 +69,8 @@
 <style type="text/css">
     header.intro-header{
         
-            background-image: url('img/header_img/chair.jpg') 
-            /*config*/
+            background-image: url('/img/header_img/archives-widget.jpg')
+            /*page*/
         
     }
     
@@ -208,197 +208,116 @@
                 post-container
             ">
             
-                <!-- Main Content -->
-
-
-<div class="post-preview">
-
-    <a href="/article/JS引擎的执行机制/">
-        <h2 class="post-title">
-            JS引擎的执行机制
-        </h2>
-        <h3 class="post-subtitle">
+                
+<!-- Main Content -->
+<div class="container">
+    <div class="row">
+        <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+            <!-- 归档列表 -->
             
-        </h3>
-        <div class="post-content-preview">
-            1.浏览器引擎（浏览器内核）
-浏览器内核的是一个多线程处理，它主要包含如下几个线程：
+            
 
-GUI渲染线程： 渲染页面的html元素
-JavaScript引擎线程： 页面的交互和dom渲染
-定时触发器线程：一定时间后，来触发对应的线程
-事件触发线程：当一个事件触发该线程的时候，就会把它放到js的事件队列中等待执行。常用于异步操作。
-异步http线程：在XMLHttpRequest在连接后是通过浏...
+             <!-- 归档列表 -->
+
+            
+            <div class="one-tag-list">
+                <span class="fa fa-calendar-times-o listing-seperator" id="2019">
+                    <span class="tag-text">2019</span>
+                </span>
+                <ul>
+                
+                  <!-- <li class="listing-item">
+                  <time datetime="{{ post.date | date:"%Y-%m-%d" }}">{{ post.date | date:"%Y-%m-%d" }}</time>
+                  <a href="{{ post.url }}" title="{{ post.title }}">{{ post.title }}</a>
+                  </li> -->
+                 <li >
+                    01-29
+                    <i class="fa fa-angle-double-right" aria-hidden="true"></i>
+                    <a href="/article/JS引擎的执行机制/" style="color: #0085a1">
+                        <span>
+                            JS引擎的执行机制
+                        </span>
+                    </a>
+                    <!-- <p class="post-meta">{{ post.date | date:"%Y-%m-%d" }}</p> -->
+                </li>
+                
+                  <!-- <li class="listing-item">
+                  <time datetime="{{ post.date | date:"%Y-%m-%d" }}">{{ post.date | date:"%Y-%m-%d" }}</time>
+                  <a href="{{ post.url }}" title="{{ post.title }}">{{ post.title }}</a>
+                  </li> -->
+                 <li >
+                    01-28
+                    <i class="fa fa-angle-double-right" aria-hidden="true"></i>
+                    <a href="/article/老生常谈-CSS垂直居中/" style="color: #0085a1">
+                        <span>
+                            老生常谈-CSS垂直居中
+                        </span>
+                    </a>
+                    <!-- <p class="post-meta">{{ post.date | date:"%Y-%m-%d" }}</p> -->
+                </li>
+                
+                  <!-- <li class="listing-item">
+                  <time datetime="{{ post.date | date:"%Y-%m-%d" }}">{{ post.date | date:"%Y-%m-%d" }}</time>
+                  <a href="{{ post.url }}" title="{{ post.title }}">{{ post.title }}</a>
+                  </li> -->
+                 <li >
+                    01-23
+                    <i class="fa fa-angle-double-right" aria-hidden="true"></i>
+                    <a href="/article/Websoket-服务器长连接（二）/" style="color: #0085a1">
+                        <span>
+                            [Websoket]服务器长连接（二)
+                        </span>
+                    </a>
+                    <!-- <p class="post-meta">{{ post.date | date:"%Y-%m-%d" }}</p> -->
+                </li>
+                
+                  <!-- <li class="listing-item">
+                  <time datetime="{{ post.date | date:"%Y-%m-%d" }}">{{ post.date | date:"%Y-%m-%d" }}</time>
+                  <a href="{{ post.url }}" title="{{ post.title }}">{{ post.title }}</a>
+                  </li> -->
+                 <li >
+                    01-05
+                    <i class="fa fa-angle-double-right" aria-hidden="true"></i>
+                    <a href="/article/Websocket-服务器长连接（一）/" style="color: #0085a1">
+                        <span>
+                            [WebSocket]服务器长连接（一）
+                        </span>
+                    </a>
+                    <!-- <p class="post-meta">{{ post.date | date:"%Y-%m-%d" }}</p> -->
+                </li>
+                
+                </ul>
+            </div>
+            
+            <div class="one-tag-list">
+                <span class="fa fa-calendar-times-o listing-seperator" id="2017">
+                    <span class="tag-text">2017</span>
+                </span>
+                <ul>
+                
+                  <!-- <li class="listing-item">
+                  <time datetime="{{ post.date | date:"%Y-%m-%d" }}">{{ post.date | date:"%Y-%m-%d" }}</time>
+                  <a href="{{ post.url }}" title="{{ post.title }}">{{ post.title }}</a>
+                  </li> -->
+                 <li >
+                    09-18
+                    <i class="fa fa-angle-double-right" aria-hidden="true"></i>
+                    <a href="/article/hexo-theme-huweihuang/" style="color: #0085a1">
+                        <span>
+                            [Hexo] Theme HuWeihuang
+                        </span>
+                    </a>
+                    <!-- <p class="post-meta">{{ post.date | date:"%Y-%m-%d" }}</p> -->
+                </li>
+                
+                </ul>
+            </div>
+            
+
+
         </div>
-    </a>
-    
-        <p class="post-meta" style="margin: 10px 0;">
-            Posted by Jerry_Z on
-            2019-01-29
-        </p>
-        <div class="tags">
-            
-              <a href="/tags/#JavaScript" title="JavaScript">JavaScript</a>
-            
-              <a href="/tags/#async/await" title="async/await">async/await</a>
-            
-              <a href="/tags/#Promise" title="Promise">Promise</a>
-            
-              <a href="/tags/#宏任务与微任务" title="宏任务与微任务">宏任务与微任务</a>
-            
-        </div>
-    
-
+    </div>
 </div>
-<hr>
-
-<div class="post-preview">
-
-    <a href="/article/老生常谈-CSS垂直居中/">
-        <h2 class="post-title">
-            老生常谈-CSS垂直居中
-        </h2>
-        <h3 class="post-subtitle">
-            
-        </h3>
-        <div class="post-content-preview">
-            在 CSS 中对元素进行水平居中是非常简单的：如果它是一个行内元素， 就对它的父元素应用text-align:center; 如果它是一个块级元素，就对它自身应用 margin:auto。然而如果要对一个元素进行垂直居中，可能光是想想就令人头皮发麻了。
-我们将使用如下所示的结构代码，并直接插入 元素中（但实际上我们将要探索的这些技巧是与容器无关的）：
-1234&lt;main&gt;  &l...
-        </div>
-    </a>
-    
-        <p class="post-meta" style="margin: 10px 0;">
-            Posted by Jerry_Z on
-            2019-01-28
-        </p>
-        <div class="tags">
-            
-              <a href="/tags/#CSS" title="CSS">CSS</a>
-            
-        </div>
-    
-
-</div>
-<hr>
-
-<div class="post-preview">
-
-    <a href="/article/Websoket-服务器长连接（二）/">
-        <h2 class="post-title">
-            [Websoket]服务器长连接（二)
-        </h2>
-        <h3 class="post-subtitle">
-            
-        </h3>
-        <div class="post-content-preview">
-            一、背景
-1. 目标：浏览器与服务器全双工通信的机制
-需要与服务器全双工通信且不需要依赖打开多个 HTTP 连接（例如，使用 XMLHttpRequest 或iframe和长轮询）的基于浏览器应用的提供一种机制。
-2.协议：包括一个打开阶段握手、接着是基本消息帧、TCP 之上的分层（layered over TCP）
-3. 解决了以下的问题：
-
-实现客户端和服务之间双向通信web应用，需要一...
-        </div>
-    </a>
-    
-        <p class="post-meta" style="margin: 10px 0;">
-            Posted by Jerry_Z on
-            2019-01-23
-        </p>
-        <div class="tags">
-            
-              <a href="/tags/#WebSocket" title="WebSocket">WebSocket</a>
-            
-        </div>
-    
-
-</div>
-<hr>
-
-<div class="post-preview">
-
-    <a href="/article/Websocket-服务器长连接（一）/">
-        <h2 class="post-title">
-            [WebSocket]服务器长连接（一）
-        </h2>
-        <h3 class="post-subtitle">
-            
-        </h3>
-        <div class="post-content-preview">
-            1.为什么需要WebSocket?
-因为HTTP协议有一个缺陷：通信只能由客户端发起。HTTP协议做不到服务器主动向客户端推送信息。
-2.之前的技术
-2.1 轮询(polling)
-
-轮询是指JavaScript启动一个定时器，然后以固定的间隔给服务器发请求，询问服务器是否有新的数据改动。
-最典型的场景就是聊天室。
-
-缺点：这种方法会导致过多不必要的请求，浪费流量和服务器资源。
-2.2 Co...
-        </div>
-    </a>
-    
-        <p class="post-meta" style="margin: 10px 0;">
-            Posted by Jerry_Z on
-            2019-01-05
-        </p>
-        <div class="tags">
-            
-              <a href="/tags/#WebSocket" title="WebSocket">WebSocket</a>
-            
-        </div>
-    
-
-</div>
-<hr>
-
-<div class="post-preview">
-
-    <a href="/article/hexo-theme-huweihuang/">
-        <h2 class="post-title">
-            [Hexo] Theme HuWeihuang
-        </h2>
-        <h3 class="post-subtitle">
-            This is hexo theme Demo.
-        </h3>
-        <div class="post-content-preview">
-            
-This HuWeihuang theme created by HuWeihuang modified from the original Porter YuHsuan
-
-Live Demo
-Hu Weihuang Blog : www.huweihuang.com
-
-Install Hexo
-Install Node.js  and Git
-123#For Macbrew instal...
-        </div>
-    </a>
-    
-        <p class="post-meta" style="margin: 10px 0;">
-            Posted by Jerry_Z on
-            2017-09-18
-        </p>
-        <div class="tags">
-            
-              <a href="/tags/#Hexo" title="Hexo">Hexo</a>
-            
-        </div>
-    
-
-</div>
-<hr>
-
-
-
-<!-- Pager -->
-
-<ul class="pager">
-    
-    
-</ul>
-
-
 
                 <br>
 
