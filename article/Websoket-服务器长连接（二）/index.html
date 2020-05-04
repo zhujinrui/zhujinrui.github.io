@@ -145,13 +145,6 @@
 
                         
                         <li>
-                            <a href="/archive/">Archives</a>
-                        </li>
-                        
-                    
-
-                        
-                        <li>
                             <a href="/about/">About</a>
                         </li>
                         
@@ -160,6 +153,13 @@
                         
                         <li>
                             <a href="/tags/">Tags</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/archive/">Archives</a>
                         </li>
                         
                     
@@ -236,7 +236,7 @@
 </blockquote>
 <h4 id="二-再论websocket实时技术">二、再论WebSocket实时技术</h4>
 <h5 id="1http的历史">1.HTTP的历史</h5>
-<p><img src="https://upload-images.jianshu.io/upload_images/7888316-841d20bd363eacb9.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
+<p><img src="https://tva1.sinaimg.cn/large/007S8ZIlgy1gegdqndwuqj30jw08974i.jpg" alt="image.png"></p>
 <p>1996年 发布了HTTP1.0版本，1999年HTTP1.1,到现在普遍使用的是1.1。 2015年HTTP2.0。HTTP协议经历了17年的发展。<br>
 影响一个 HTTP 网络请求的因素主要有两个：带宽和延迟。(浏览器阻塞，同一域名只有4个连接，DNS查询，TCP三次握手)</p>
 <ul>
@@ -246,21 +246,21 @@
 <p>websocket主要通过==http/1.1协议的101状态码==进行握手</p>
 <h5 id="2-ajax短轮询">2.  Ajax短轮询</h5>
 <p>最早的一种实时Web应用的方案。客户端以一定的时间间隔服务器发送请求，以频繁请求的方式保持客户端和服务器端的同步。<br>
-<img src="https://upload-images.jianshu.io/upload_images/7888316-9263164b2195db55.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
+<img src="https://tva1.sinaimg.cn/large/007S8ZIlgy1gegdqq5mhkj30ie0bs3z9.jpg" alt="image.png"></p>
 <p>场景再现：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">客户端：啦啦啦，有没有新信息(Request)</span><br><span class="line">服务端：没有(Response)</span><br><span class="line">客户端：啦啦啦，有没有新信息(Request)</span><br><span class="line">服务端：没有。。(Response)</span><br><span class="line">客户端：啦啦啦，有没有新信息(Request)</span><br><span class="line">服务端：有啦给你（Response)</span><br><span class="line">客户端：啦啦啦，有没有新信息(Request)</span><br><span class="line">服务端：。。。没。。。。没有(Response)</span><br></pre></td></tr></table></figure>
 <p>代码实现：</p>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">&lt;script type=<span class="string">"text/javascript"</span>&gt;</span><br><span class="line">  <span class="keyword">var</span> getting = &#123;</span><br><span class="line">  url:<span class="string">'server.php'</span>,</span><br><span class="line">  dataType:<span class="string">'json'</span>,</span><br><span class="line">  success:<span class="function"><span class="keyword">function</span>(<span class="params">res</span>) </span>&#123; </span><br><span class="line">    <span class="built_in">console</span>.log(res);</span><br><span class="line">  &#125; </span><br><span class="line">&#125;;</span><br><span class="line"><span class="comment">//关键在这里，Ajax定时访问服务端，不断获取数据 ，这里是1秒请求一次。</span></span><br><span class="line"><span class="built_in">window</span>.setInterval(<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;$.ajax(getting)&#125;,<span class="number">1000</span>);</span><br><span class="line">&lt;<span class="regexp">/script&gt;</span></span><br></pre></td></tr></table></figure>
 <h5 id="3-长轮询">3.  长轮询</h5>
 <p>对定时轮询的改进和提高，为某些数据设置过期时间。当数据过期后才会向服务端发送请求；这种机制适合数据的改动不是特别频繁的情况。<br>
-<img src="https://upload-images.jianshu.io/upload_images/7888316-242eb979031279c9.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
+<img src="https://tva1.sinaimg.cn/large/007S8ZIlgy1gegdqszpbzj30ij0dawfm.jpg" alt="image.png"></p>
 <p>场景再现：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">客户端：啦啦啦，有没有新信息,没有的话就等有了才返回给我吧(Request)</span><br><span class="line">（一段时间之后。。。）</span><br><span class="line">服务端：有消息啦。。来给你(Response)</span><br><span class="line"></span><br><span class="line">客户端：啦啦啦，有没有新信息,没有的话就等有了才返回给我吧(Request)</span><br><span class="line">（一段时间之后。。。）</span><br><span class="line">服务端：有消息啦。。来给你(Response)</span><br><span class="line">`</span><br></pre></td></tr></table></figure>
 <p>代码实现：</p>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">&lt;script type=<span class="string">"text/javascript"</span>&gt;</span><br><span class="line">  <span class="comment">//前端Ajax持续调用服务端，称为Ajax轮询技术</span></span><br><span class="line">  <span class="keyword">var</span> getting = &#123;</span><br><span class="line">    url:<span class="string">'server.php'</span>,</span><br><span class="line">    dataType:<span class="string">'json'</span>,</span><br><span class="line">    success:<span class="function"><span class="keyword">function</span>(<span class="params">res</span>) </span>&#123;</span><br><span class="line">      <span class="built_in">console</span>.log(res);</span><br><span class="line">      $.ajax(getting); <span class="comment">//关键在这里，回调函数内再次请求Ajax</span></span><br><span class="line">    &#125;        </span><br><span class="line">    <span class="comment">//当请求时间过长（默认为60秒），就再次调用ajax长轮询</span></span><br><span class="line">    error:<span class="function"><span class="keyword">function</span>(<span class="params">res</span>)</span>&#123;</span><br><span class="line">      $.ajax($getting);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;;</span><br><span class="line">  $.ajax(getting);</span><br><span class="line">&lt;<span class="regexp">/script&gt;</span></span><br></pre></td></tr></table></figure>
 <h5 id="4-流技术">4.  流技术</h5>
 <p>设置隐藏窗口向服务器发出长连接请求。服务器接收到这个请求后作出回应并不断更新连接状态以保证客户端和服务器端的连接不过期。</p>
-<p><img src="https://upload-images.jianshu.io/upload_images/7888316-783bacd31712a357.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
+<p><img src="https://tva1.sinaimg.cn/large/007S8ZIlgy1gegdqw7vvkj30i60claay.jpg" alt="image.png"></p>
 <p>iframe流方式是在页面中插入一个隐藏的iframe，利用其src属性在服务器和客户端之间创建一条长链接，服务器向iframe传输数据（通常是HTML，内有负责插入信息的javascript），来实时更新页面。<br>
 iframe流方式的优点是浏览器兼容好，Google公司在一些产品中使用了iframe流，如Google Talk。<br>
 在第一种方式中，浏览器在收到数据后会直接调用JS回调函数，但是这种方式该如何响应数据呢？可以通过在返回数据中嵌入JS脚本的方式，如“”，服务器端将返回的数据作为回调函数的参数，浏览器在收到数据后就会执行这段JS脚本。</p>
@@ -299,7 +299,7 @@ iframe流方式的优点是浏览器兼容好，Google公司在一些产品中�
 该协议包括两个方面：==握手连接==（handshake)和==数据传输==（date transfer）</p>
 <h5 id="1握手过程">1.握手过程</h5>
 <h5 id="客户端发起的请求头">客户端发起的请求头</h5>
-<p><img src="https://upload-images.jianshu.io/upload_images/7888316-85394c54400467c9.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
+<p><img src="https://tva1.sinaimg.cn/large/007S8ZIlgy1gegdr00exvj309t03yt9g.jpg" alt="image.png"></p>
 <ul>
 <li>GET /chat HTTP/1.1：打开阶段握手，使用http协议。</li>
 <li>Upgrade: websocket，申请协议升级，Upgrade表示需要从HTTP切换到WebSocket协议。</li>
@@ -318,7 +318,7 @@ iframe流方式的优点是浏览器兼容好，Google公司在一些产品中�
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">1.</span> t = <span class="string">"GhlIHNhbXBsZSBub25jZQ=="</span> + <span class="string">"258EAFA5-E914-47DA-95CA-C5AB0DC85B11"</span></span><br><span class="line">   -&gt; <span class="string">"GhlIHNhbXBsZSBub25jZQ==258EAFA5-E914-47DA-95CA-C5AB0DC85B11"</span></span><br><span class="line"><span class="number">2.</span> s = sha1(t) </span><br><span class="line">   -&gt; <span class="number">0xb3</span> <span class="number">0x7a</span> <span class="number">0x4f</span> <span class="number">0x2c</span> <span class="number">0xc0</span> <span class="number">0x62</span> <span class="number">0x4f</span> <span class="number">0x16</span> <span class="number">0x90</span> <span class="number">0xf6</span> </span><br><span class="line">      <span class="number">0x46</span> <span class="number">0x06</span> <span class="number">0xcf</span> <span class="number">0x38</span> <span class="number">0x59</span> <span class="number">0x45</span> <span class="number">0xb2</span> <span class="number">0xbe</span> <span class="number">0xc4</span> <span class="number">0xea</span></span><br><span class="line"><span class="number">3.</span> base64(s) </span><br><span class="line">   -&gt; <span class="string">"s3pPLMBiTxaQ9kYGzzhZRbK+xOo="</span></span><br></pre></td></tr></table></figure>
 <h5 id="2数据通信过程">2.数据通信过程</h5>
 <p>client数据包的格式如下：<br>
-<img src="https://upload-images.jianshu.io/upload_images/7888316-96bb7d0d5b29c21b.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
+<img src="https://tva1.sinaimg.cn/large/007S8ZIlgy1gegdr3pzh4j3090081q4c.jpg" alt="image.png"></p>
 <p>数据包的长度是固定的。根据payload len 的长度是为126或127是不一样的。</p>
 <p>传送的帧类型可以分为两类：<code>数据帧</code>和<code>控制帧</code>。数据帧可以携带文本数据或二进制数据；控制帧包含关闭帧（Close frame)和Ping/Pong帧。</p>
 <p>FIN ：表示该数据帧是否是信息最后一帧的标记符。为1是为最后一帧，为0不是。</p>
@@ -373,7 +373,7 @@ iframe流方式的优点是浏览器兼容好，Google公司在一些产品中�
 <li>服务端会继续给客户端发送数据，这些数据会丢失。</li>
 </ul>
 <p>所以就需要一种机制来检测客户端和服务端是否处于正常连接的状态。心跳检测就是这样的一种机制，一般来说客户端每过一定时间向服务器发送一个数据包，告诉服务器自己还活着。</p>
-<p><img src="https://upload-images.jianshu.io/upload_images/7888316-1d565ffb2278adb5.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
+<p><img src="https://tva1.sinaimg.cn/large/007S8ZIlgy1gegdr8ep47j30d606omx4.jpg" alt="image.png"></p>
 <p>心跳检测，用我自己的话来说，<strong>就是为了检测客户端与服务端的连接是否能存活</strong></p>
 <p>第一，心跳检测包由客户端（浏览器）定时向服务端（后端）发送约定好的消息格式，告诉服务端客户端在线，服务端收到消息后立即返回一个消息，告诉客户端长连接没问题，可以正常使用。</p>
 <p>第二，心跳检测也可以用来检测后端是否正常，如果在连接正常的情况下，服务端并未能在设定的时间内返回特定消息，说明可能当前后端异常，当前连接不可用，客户端可以尝试重新建立websocket连接来重试。</p>
@@ -391,7 +391,7 @@ iframe流方式的优点是浏览器兼容好，Google公司在一些产品中�
 <li>ws</li>
 <li><a href="http://socket.io" target="_blank" rel="noopener">socket.io</a></li>
 </ul>
-<p><img src="https://upload-images.jianshu.io/upload_images/7888316-677de63562bf5405.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
+<p><img src="https://tva1.sinaimg.cn/large/007S8ZIlgy1gegdrcmwntj30yg0iwdjz.jpg" alt="image.png"></p>
 <p>WebSocket是HTML5最新提出的规范，虽然主流浏览器都已经支持，但仍然可能有不兼容的情况，为了兼容所有浏览器，给程序员提供一致的编程体验，<strong>SocketIO将WebSocket、AJAX和其它的通信方式全部封装成了统一的通信接口</strong>，也就是说，我们在使用SocketIO时，不用担心兼容问题，底层会自动选用最佳的通信方式。因此说，WebSocket是SocketIO的一个子集。</p>
 <ul>
 <li>跨终端，可以在任何平台，浏览器、设备上工作。</li>
@@ -408,7 +408,7 @@ iframe流方式的优点是浏览器兼容好，Google公司在一些产品中�
 <li>ws和socket.io都可以单独作为websocket服务器，也可以挂到express和koa框架，同时提供web和websocket服务。</li>
 </ul>
 <p>以下就是一个socket.io的请求。</p>
-<p><img src="https://upload-images.jianshu.io/upload_images/7888316-bf191aeba18a5318.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
+<p><img src="https://tva1.sinaimg.cn/large/007S8ZIlgy1gegdrfw5ooj30re0g0acy.jpg" alt="image.png"></p>
 <h5 id="2-socketio实践">2. socket.io实践</h5>
 <p>Socket.io由两部分组成：</p>
 <ul>
