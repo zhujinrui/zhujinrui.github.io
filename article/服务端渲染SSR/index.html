@@ -147,14 +147,14 @@
 
                         
                         <li>
-                            <a href="/about/">About</a>
+                            <a href="/archive/">Archives</a>
                         </li>
                         
                     
 
                         
                         <li>
-                            <a href="/archive/">Archives</a>
+                            <a href="/about/">About</a>
                         </li>
                         
                     
@@ -223,13 +223,13 @@
 <p>前端负责切图和编写静态页面模板，后端将数据渲染到前端提供的页面模板中，最后将页面渲染到浏览器展示。</p>
 <p>这个过程中，前端只提供页面模板或者写一些JavaScript脚本，有的甚至JS脚本都是后端来写，前端的作用只局限于切图和样式模板文件，这种角色就是传说中的“切图仔”。</p>
 <p>下图这种方式就是服务端渲染，服务端拿到前端的页面模板，在特定的区域用数据填充，再把填充了数据后的HTML返回给客户端，客户端只负责解析HTML。这种方式也被称为 <code>fat-server,thin-clinet</code>模式。</p>
- <img src="https://upload-images.jianshu.io/upload_images/7888316-857145f1c35f76a1.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" width="600">
- <img src="https://upload-images.jianshu.io/upload_images/7888316-ec89bcd4f7f3a86d.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" width="600">
+ <img src="https://tva1.sinaimg.cn/large/007S8ZIlgy1gegdh7lyqnj30vo0nmgm8.jpg" width="600">
+ <img src="https://tva1.sinaimg.cn/large/007S8ZIlgy1gegdhsxvnfj30yg08fglk.jpg" width="600">
 <p>前端只负责DOM操作，表单校验，以及动画的处理等；而后端需要提供加载的数据的HTML页面，需要做路由的转化处理，写应用逻辑，保证稳定性等等，大部分的工作都是在后端来处理的。</p>
 <h5 id="2当下的客户端渲染">2.当下的客户端渲染</h5>
 <p>目前使用最多的还是客户端渲染模式。客户端发送请求给服务器，服务器把客户端需要的静态文件和接口数据返回给客户端，其中视图的解析过程和渲染过程都放到浏览器端去执行。</p>
- <img src="https://upload-images.jianshu.io/upload_images/7888316-aa3d76914e69f34c.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" width="600">
-<img src="https://upload-images.jianshu.io/upload_images/7888316-9cf1cc0c876a7169.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" width="600">
+ <img src="https://tva1.sinaimg.cn/large/007S8ZIlgy1gegdhzi0nxj30y20nqt9c.jpg" width="600">
+<img src="https://tva1.sinaimg.cn/large/007S8ZIlgy1gegdi4mbvuj30yg0dbglo.jpg" width="600">
 <h5 id="3对比">3.对比</h5>
 <p>客户端渲染和服务端渲染，实际上对应了两种Web构建模式：<strong>前后端分离模式</strong>和<strong>直出模式</strong>。</p>
 <blockquote>
@@ -239,11 +239,11 @@
 </blockquote>
 <p><strong>模式一：前后端分离模式（对应客户端渲染）</strong></p>
 <p>客户端渲染顺序： a -&gt; b -&gt; c （a,b,c都在客户端进行）</p>
-<img src="https://upload-images.jianshu.io/upload_images/7888316-13424376d9e30d84.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" width="600">
+<img src="https://tva1.sinaimg.cn/large/007S8ZIlgy1gegdi9bfwvj30mm0huwee.jpg" width="600">
 <p><strong>模式二：直出模式（对应服务端渲染）</strong></p>
 <p>服务端渲染顺序： b -&gt; c -&gt; a （b,c在服务端进行，最后的a在客户端进行）</p>
-<img src="https://upload-images.jianshu.io/upload_images/7888316-fa662a8ccbff48cb.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" width="600">
-<img src="https://upload-images.jianshu.io/upload_images/7888316-a054d539d8c634ba.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" width="1000">
+<img src="https://tva1.sinaimg.cn/large/007S8ZIlgy1gegdifie6hj30ma0i2q2u.jpg" width="600">
+<img src="https://tva1.sinaimg.cn/large/007S8ZIlgy1gegdikonxvj30yg0dewk0.jpg" width="1000">
 <h5 id="使用-ssr-技术的主要因素">使用 SSR 技术的主要因素：</h5>
 <ol>
 <li>
@@ -265,7 +265,7 @@
 <li>React将其与服务端布局进行对比</li>
 <li>对比成功，复用当前页面；反之则重新渲染</li>
 </ul>
-<img src="https://upload-images.jianshu.io/upload_images/7888316-1ac019949aadea2c.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" width="500">
+<img src="https://tva1.sinaimg.cn/large/007S8ZIlgy1gegdinu51ej30f00f9t92.jpg" width="500">
 <h5 id="服务端只负责首屏渲染">服务端只负责首屏渲染：</h5>
 <blockquote>
 <p><strong>服务端只负责从浏览器器发送请求的第⼀次渲染</strong>，服务器将该url<br>
@@ -275,13 +275,13 @@
 <p>在整个同构过程中，我们需要保持路由一致，数据一致。那在React中如何做的呢？React利用了<code>Redux</code>的状态管理功能，引入了Redux来保证数据的一致性。</p>
 <h5 id="1-渲染方式">1. 渲染方式</h5>
 <p><strong>客户端</strong>: 使用React的ReactDOM模块的hydrate()方法把组件挂在⼀个容器上，然后虚拟dom结合js的dom操作相关的api生成真实dom。</p>
-<img src="https://upload-images.jianshu.io/upload_images/7888316-e7ddec1692451773.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" width="500">
+<img src="https://tva1.sinaimg.cn/large/007S8ZIlgy1gegdirazplj30yg0n7tcf.jpg" width="500">
 <p><strong>服务端</strong>：使用<code>ReactDom/server</code>中的<code>renderToString()</code>⽅法将虚拟dom直接转化为HTML标签，然后将HTML字符串返回给客户端。</p>
-<img src="https://upload-images.jianshu.io/upload_images/7888316-c7d9e3c9b86a24a1.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" width="500">
+<img src="https://tva1.sinaimg.cn/large/007S8ZIlgy1gegditi51nj30xe0cugnc.jpg" width="500">
 <h5 id="2-保持路由一致">2. 保持路由一致</h5>
 <p>我们都知道客户端有：<code>BrowserRouter</code>和<code>HashRouter</code>，但服务端是不支持的，它支持的是<code>StaticRouter</code>。但是里面的<code>routes</code>是可以公用的。</p>
 <p>比如这部分路由的定义是可以共用的：</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> React <span class="keyword">from</span> <span class="string">'react'</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; Route &#125; <span class="keyword">from</span> <span class="string">'react-router-dom'</span>;</span><br><span class="line"><span class="keyword">import</span> Home <span class="keyword">from</span> <span class="string">'./container/Home'</span>;</span><br><span class="line"><span class="keyword">import</span> Login <span class="keyword">from</span> <span class="string">'./container/Login'</span>;</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> (</span><br><span class="line">    &lt;div&gt;</span><br><span class="line">        &lt;Route path=<span class="string">"/"</span> exact component=&#123;Home&#125;&gt;<span class="xml"><span class="tag">&lt;/<span class="name">Route</span>&gt;</span></span></span><br><span class="line">        &lt;Route path=<span class="string">"/login"</span> component=&#123;Login&#125;&gt;<span class="xml"><span class="tag">&lt;/<span class="name">Route</span>&gt;</span></span></span><br><span class="line">    &lt;<span class="regexp">/div&gt;</span></span><br><span class="line"><span class="regexp">)</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> React <span class="keyword">from</span> <span class="string">'react'</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; Route &#125; <span class="keyword">from</span> <span class="string">'react-router-dom'</span>;</span><br><span class="line"><span class="keyword">import</span> Home <span class="keyword">from</span> <span class="string">'./container/Home'</span>;</span><br><span class="line"><span class="keyword">import</span> Login <span class="keyword">from</span> <span class="string">'./container/Login'</span>;</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> (</span><br><span class="line">    &lt;div&gt;</span><br><span class="line">        &lt;Route path=<span class="string">"/"</span> exact component=&#123;Home&#125;&gt;&lt;/Route&gt;</span><br><span class="line">        &lt;Route path=<span class="string">"/login"</span> component=&#123;Login&#125;&gt;&lt;/Route&gt;</span><br><span class="line">    &lt;<span class="regexp">/div&gt;</span></span><br><span class="line"><span class="regexp">)</span></span><br></pre></td></tr></table></figure>
 <p><strong>客户端</strong>直接用<code>BrowserRouter</code>包裹上面导出的模块即可。客户端的路由是<code>动态</code>的，能监听浏览器地址栏url的变化，然后返回对应的视图。</p>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> React <span class="keyword">from</span> <span class="string">'react'</span>;</span><br><span class="line"><span class="keyword">import</span> ReactDom <span class="keyword">from</span> <span class="string">'react-dom'</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; BrowserRouter, Route &#125; <span class="keyword">from</span> <span class="string">'react-router-dom'</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; renderRoutes &#125; <span class="keyword">from</span> <span class="string">'react-router-config'</span>;</span><br><span class="line"><span class="keyword">import</span> routes <span class="keyword">from</span> <span class="string">'../Routes'</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; getClientStore &#125; <span class="keyword">from</span> <span class="string">'../store'</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; Provider &#125; <span class="keyword">from</span> <span class="string">'react-redux'</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> store = getClientStore();</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> App = <span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">	<span class="keyword">return</span> (</span><br><span class="line">		&lt;Provider store=&#123;store&#125;&gt;</span><br><span class="line">			&lt;BrowserRouter&gt;</span><br><span class="line">				&lt;div&gt;</span><br><span class="line">					&#123;renderRoutes(routes)&#125;</span><br><span class="line">	    	&lt;<span class="regexp">/div&gt;</span></span><br><span class="line"><span class="regexp">			&lt;/</span>BrowserRouter&gt;</span><br><span class="line">		&lt;<span class="regexp">/Provider&gt;</span></span><br><span class="line"><span class="regexp">	)</span></span><br><span class="line"><span class="regexp">&#125;</span></span><br><span class="line"><span class="regexp"></span></span><br><span class="line"><span class="regexp">ReactDom.hydrate(&lt;App /</span>&gt;, <span class="built_in">document</span>.getElementById(<span class="string">'root'</span>))</span><br></pre></td></tr></table></figure>
 <p><strong>服务端</strong>使⽤的是<code>react-router-dom</code>提供的<code>StaticRouter</code> api，就只是匹配页面reload时浏览器地址栏的url，然后返回对应的视图，不能去监听变化，只是请求的url是什么就返回什么。</p>
@@ -294,7 +294,7 @@
 <h5 id="3保持数据一致">3.保持数据一致</h5>
 <p>前端不能用原生的<code>ajax</code>请求，因为ajax请求用的是浏览器的<code>XMLHttpRequest</code>对象，该方式只在<code>浏览器环境</code>支持。</p>
 <p>可以使⽤用<code>fetch框架</code>的请求⽅方式，该方式可在多端运行，使用 <code>isomorphic-fetch</code>可以同时照顾 <code>node</code> 和 <code>browser</code> 环境。<br>
-<img src="https://upload-images.jianshu.io/upload_images/7888316-b79b1def06889c0a.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" width="500"></p>
+<img src="https://tva1.sinaimg.cn/large/007S8ZIlgy1gegdj06e49j30yg08smzw.jpg" width="500"></p>
 <p><strong>前端得到数据之后，如何把数据存储起来？</strong></p>
 <p>服务端渲染返回的是<code>HTML字符串</code>，<strong>不能</strong>执行到React的⽣命周期函数，所以在⾸屏⻚⾯中React的<code>setState</code>⽅法⽆法执行，也就意味着浏览器⽆法将⻚⾯上显示的数据以state的形式存起来，如果后续页⾯的点击等操作都是和当前⻚⾯显示数据相关，就不能继续执行了。</p>
 <p>这里采用<code>Redux</code>做全局状态管理，把所有的数据都存在一个<code>store</code>中，也就是全局只有⼀个store，然后把数据以<code>props</code>的形式下发给每个子⻚⾯，这样⻚⾯在使⽤用数据时只⽤去props取就可以了。</p>
@@ -327,20 +327,14 @@
 <p>在上面，我们说到，服务器端渲染时，页面的数据是通过 loadData 函数来获取的。而在客户端，数据获取依然要做，因为如果这个页面是你访问的第一个页面，那么你看到的内容是服务器端渲染出来的，但是如果经过 react-router 路由跳转道第二个页面，那么这个页面就完全是客户端渲染出来的了，所以客户端也要去拿数据。</p>
 <p>在客户端获取数据，使用的是我们最习惯的方式，通过 componentDidMount 进行数据的获取。这里要注意的是，componentDidMount 只在客户端才会执行，在服务器端这个生命周期函数是不会执行的。所以我们不必担心 componentDidMount 和 loadData 会有冲突，放心使用即可。这也是为什么数据的获取应该放到 componentDidMount 这个生命周期函数中而不是 componentWillMount 中的原因，可以避免服务器端获取数据和客户端获取数据的冲突。</p>
 <p>然而在客户端，一开始的store是为空的，然后再异步请求成功后再渲染。这样会造成一个问题，在渲染时，明明是有数据的，但因为客户端的问题，会先出现空白，再有数据的现象。要解决这个问题，也很容易。服务端需要先写出一个全局的对象（就是store的数据）：</p>
-<img src="https://upload-images.jianshu.io/upload_images/7888316-7ed4ebe38b7102e2.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" width="500">
+<img src="https://tva1.sinaimg.cn/large/007S8ZIlgy1gegdj4ou3qj30yg0nbgq7.jpg" width="500">
 <p>具体的ssr实例可以参看 <a href="https://github.com/alexnm/react-ssr" target="_blank" rel="noopener">这里</a></p>
 <p><strong>Reference</strong></p>
 <ul>
-<li>
-<p><a href="https://segmentfault.com/a/1190000016722457" target="_blank" rel="noopener"><br>
-React 中同构（SSR）原理脉络梳理</a></p>
-</li>
-<li>
-<p><a href="http://www.cnblogs.com/penghuwan/p/7126054.html" target="_blank" rel="noopener">【redux】详解react/redux的服务端渲染：页面性能与SEO</a></p>
-</li>
-<li>
-<p><a href="https://www.my-fe.pub/post/react-ssr-note.html" target="_blank" rel="noopener">react ssr笔记</a></p>
-</li>
+<li><a href="https://segmentfault.com/a/1190000016722457" target="_blank" rel="noopener">React 中同构（SSR）原理脉络梳理</a></li>
+<li><a href="https://www.my-fe.pub/post/react-ssr-note.html" target="_blank" rel="noopener">react ssr笔记</a></li>
+<li><a href="http://www.cnblogs.com/penghuwan/p/7126054.html" target="_blank" rel="noopener">【redux】详解react/redux的服务端渲染：页面性能与SEO</a></li>
+<li></li>
 </ul>
 
                 
@@ -552,7 +546,7 @@ React 中同构（SSR）原理脉络梳理</a></p>
 
                 </ul>
                 <p class="copyright text-muted">
-                    Copyright &copy; Jerry_Z 2019 
+                    Copyright &copy; Jerry_Z 2020 
                     <br>
                     <!-- Theme by <a href="http://beantech.org">BeanTech</a> 
                     <span style="display: inline-block; margin: 0 5px;">
