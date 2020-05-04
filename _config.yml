@@ -25,7 +25,7 @@ SEOTitle: Jerry_Z | Blog
 email: 970636183@qq.com
 description: ""
 keyword: ""
-header-img: img/header_img/adventure-clouds.jpg
+header-img: img/header_img/chair.jpg
 article-img: /img/article_header/article_bg.jpg
 404-img: /img/header_img/404.png
 signature: true #show signature
@@ -53,6 +53,7 @@ anchorjs: true                          # if you want to customize anchor. check
 # Share component is depend on Comment so we can NOT use share only.
 #duoshuo_share: true                     # set to false if you want to use Comment without Sharing
 
+livere_uid: MTAyMC80MjQzNS8xODk4Mg==
 
 # Analytics settings
 #Baidu Analytics
@@ -195,12 +196,25 @@ data-fixed: true
   # data-mini:
   # data-autoplay:    
 
+
+# Reward
+reward: true
+reward_comment: 赞赏一下
+wechatpay: /img/pay/wechat_pay.jpg
+alipay: /img/pay/alipay.jpg
+
+# Share
+# Reference: https://github.com/overtrue/share.js
+share: true
+
 ## Themes: https://hexo.io/themes/
 theme: huweihuang
 
 #sitemap
 sitemap:
   path: sitemap.xml
+
+
 
 # Deployment
 ## Docs: https://hexo.io/docs/deployment.html

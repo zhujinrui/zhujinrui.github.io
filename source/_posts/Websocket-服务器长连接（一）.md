@@ -42,9 +42,8 @@ catagories:
 
 >WebSocket的工作流程是这样的：浏览器通过JavaScript向服务端发出建立WebSocket连接的请求，在WebSocket连接建立成功后，客户端和服务端就可以通过 TCP连接传输数据。因为WebSocket连接本质上是TCP连接，不需要每次传输都带上重复的头部数据，所以它的数据传输量比轮询和Comet技术小 了很多。
 
-
 **最大特点**：服务器可以主动向客户端推送信息，客户端也可以主动向服务器发送信息，是真正的双向平等对话，属于`服务器推送技术`的一种。
-![img](https://upload-images.jianshu.io/upload_images/7888316-a7ed4bf431fffcf8.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+![img](https://tva1.sinaimg.cn/large/007S8ZIlgy1gegdq46mtpj30hg0e7dg4.jpg)
 
 
 WebSocket连接必须由浏览器发起，因为请求是一个标准的HTTP请求：
@@ -137,7 +136,7 @@ wss.on('connection', function connection(ws) { //connection事件
 
 **同源策略**
 WebSocket协议本身不支持同源策略，也就是某个地址为`http://a.com`的网页可以通过websocket连接到`ws://b.com`。但是，浏览器会发送`Origin`的HTTP头给服务器，服务器可以根据`Origin`拒绝这个WebSocket请求。所以，是否要求同源要看服务器端如何检查。
-![img](https://upload-images.jianshu.io/upload_images/7888316-9457cdd15a361c1f.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+![img](https://tva1.sinaimg.cn/large/007S8ZIlgy1gegdqced4dj30nb0g4acf.jpg)
 
 #### 4.WebSocket API
 ###### 4.1事件

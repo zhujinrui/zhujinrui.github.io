@@ -31,9 +31,29 @@ layout: layout
                         </li>
                     <% } %>
                 </ul>
-
                 <br>
-                
+
+                <!--打赏-->
+                <% if(config['reward']) { %>
+                    <div class="reward">
+                        <div class="reward-button">赏 <span class="reward-code"> 
+                            <span class="alipay-code"> <img class="alipay-img" src="<%= config['alipay'] %>"><b>支付宝打赏</b></span> 
+                            <span class="wechat-code"> <img class="wechat-img" src="<%= config['wechatpay'] %>"><b>微信打赏</b> </span>
+                            </span></div>
+                        <p class="reward-notice"><%= config['reward_comment'] %></p>
+                    </div>
+                <% } %>
+                <!--打赏-->
+                <br>
+                <!--分享-->
+                <% if(config['share']) { %>
+                    <div class="social-share"  data-wechat-qrcode-helper="" align="center"></div>
+                    <!--  css & js -->
+                    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/social-share.js/1.0.16/css/share.min.css">
+                    <script src="https://cdnjs.cloudflare.com/ajax/libs/social-share.js/1.0.16/js/social-share.min.js"></script>
+                <% } %>
+                <!--分享-->
+                <br>                 
                 <!-- require APlayer -->
                 <% if(config['metingjs']) { %>
                 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aplayer@1.10/dist/APlayer.min.css">
